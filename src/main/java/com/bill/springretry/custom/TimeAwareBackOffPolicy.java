@@ -69,7 +69,7 @@ public class TimeAwareBackOffPolicy implements BackOffPolicy {
      * 根據當前時間計算退避時間
      */
     private long calculateSleepTime() {
-        LocalTime now = LocalTime.now();
+        LocalTime now = getCurrentTime();
         int currentHour = now.getHour();
         
         // 判斷是否在高峰時段
@@ -87,6 +87,14 @@ public class TimeAwareBackOffPolicy implements BackOffPolicy {
         // 默認使用基本退避時間
         System.out.println("目前是正常時段，使用標準退避時間");
         return baseInterval;
+    }
+    
+    /**
+     * 獲取當前時間 - 為了便於測試，可被重寫
+     * @return 當前時間
+     */
+    protected LocalTime getCurrentTime() {
+        return LocalTime.now();
     }
     
     /**
